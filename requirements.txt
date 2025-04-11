@@ -1,0 +1,2 @@
+torchtext~=0.18.0
+torch~=2.6.0
