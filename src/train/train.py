@@ -9,7 +9,7 @@ from .scheduler import get_lr
 from .optimizer import configure_optimizers
 from .utils import setup_ddp, is_master_process, GradScalerWrapper
 from data.dataloader import DataLoaderLite
-from tokenizer.tiktoken_loader import get_tokenizer
+from tokenizer.tokenizer import get_tokenizer
 
 
 def train():
@@ -81,9 +81,11 @@ def train():
         tokens_per_sec = tokens_processed / dt
 
         if is_master_process():
-            print(f"step {step:5d} | loss: {loss_accum.item():.6f} | lr {lr:.4e} | norm: {norm:.4f} | dt: {dt*1000:.2f}ms | tok/sec: {tokens_per_sec:.2f}")
+            print(
+                f"step {step:5d} | loss: {loss_accum.item():.6f} | lr {lr:.4e} | norm: {norm:.4f} | dt: {dt * 1000:.2f}ms | tok/sec: {tokens_per_sec:.2f}")
             with open(log_file, "a") as f:
                 f.write(f"{step} train {loss_accum.item():.6f}\n")
+
 
 if __name__ == "__main__":
     train()
